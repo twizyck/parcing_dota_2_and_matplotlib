@@ -18,7 +18,7 @@ def main():
     heroes = []
     winrates = []
 
-    for i in range(100):
+    for i in range(10):
         try:
             name = browser.find_element(By.XPATH, fullXpath +f"/tr[{i+1}]" + "/td[1]").text
             winrate = browser.find_element(By.XPATH, fullXpath +f"/tr[{i+1}]" + "/td[3]").text
@@ -31,12 +31,12 @@ def main():
             print(e)
             break
 
-        print(f"{name}, winrate: {winrate}\n")
-
 
     time.sleep(2)
     browser.close()
     browser.quit()
+
+    heroes, winrates = zip(*sorted(zip(heroes, winrates), key=lambda x: x[1], reverse=True))
 
     plt.figure(figsize=(15, 6))
     plt.barh(heroes[::-1], winrates[::-1], color='skyblue')  # Реверсируем списки для лучшего отображения
